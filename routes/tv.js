@@ -1,10 +1,9 @@
 import express from "express";
 import datas from "../api.js";
 
+const tvRouter = express.Router();
 
-const moviesRouter = express.Router();
-
-moviesRouter.get("/", async (req, res) => {
+tvRouter.get("/", async (req, res) => {
   const api_params = {
     query: req.query.query,
     page: req.query.page,
@@ -12,7 +11,7 @@ moviesRouter.get("/", async (req, res) => {
     genre: req.query.genre,
     region: req.query.region,
   };
-  res.send(await datas.search({...api_params},"movie"))
+  res.send(await datas.search({...api_params},"tv"))
 });
 
-export default moviesRouter 
+export default tvRouter

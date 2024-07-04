@@ -1,7 +1,8 @@
 import express from 'express';
 import movieRouter from './routes/movie.js';
 import moviesRouter from './routes/movies.js';
-import {api} from "./api.js"
+import tvRouter from './routes/tv.js';
+
 
 const PORT = 3000;
 
@@ -10,7 +11,7 @@ const expressApp = express();
 expressApp.use(express.json());
 
 try{
-  expressApp.use("/movie",movieRouter)
+  expressApp.use("/api/movie",movieRouter)
   expressApp.listen(PORT,()=>
     console.log(`aca esta el servidor: ${PORT}`))
 }catch(e){
@@ -21,7 +22,8 @@ expressApp.get("/moviees/genre", async (req,res)=>{
   res.send(genreList.data.genres)
 })
 
-  expressApp.use("/movies",moviesRouter)
+  expressApp.use("/api/movies",moviesRouter)
+  expressApp.use("/api/tv",tvRouter)
 
 
 
