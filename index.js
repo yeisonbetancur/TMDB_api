@@ -1,6 +1,5 @@
 import express from 'express';
-import  { api }  from './db.js';
-
+import movieRouter from './routes/movie.js';
 
 const PORT = 3000;
 
@@ -8,22 +7,16 @@ const expressApp = express();
 
 expressApp.use(express.json());
 
-expressApp.get("/movie/:id", async (req, res) => { 
-  const id = req.params.id
-  try{
-    const { data } = await api.get(`/movie/${id}`);
-    res.send(data);
-  }
-  catch (e){
-    console.log(e)
-        res.status(404).send("Movie not found");
-        return;
-  }
-  });
-  expressApp.get("/movie/popular",async (req,res)=>{
-    const {data} = await api.get ("/movie/popular")
-    res.send(data)
-  } )
+try{
+  expressApp.use("/movie",movieRouter)
+  expressApp.use("/movies",moviesRouter)
+  expressApp.listen(PORT,()=>
+    console.log(`aca esta el servidor: ${PORT}`))
+}catch(e){
+  console.log(e)
+}
+
+
 
 
 //  expressApp.get("/movie/:id", (req, res) => {
@@ -76,6 +69,6 @@ expressApp.delete("/accounts/:guid", (req, res) => {
 
 
  */
- expressApp.listen(PORT, () => {
+/*  expressApp.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-}); 
+});  */
