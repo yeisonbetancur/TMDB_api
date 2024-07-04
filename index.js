@@ -8,16 +8,24 @@ const expressApp = express();
 
 expressApp.use(express.json());
 
-expressApp.get("/movies/:id", async (req, res) => {
-  const { data } = await api.get("/movie");
-const movie = data.results.find((movie) => movie.id === req.params.id.toString());
-  if (!movie){
-    res.status(404).send("Movie not found");
-    return;
+expressApp.get("/movie/:id", async (req, res) => { 
+  const id = req.params.id
+  try{
+    const { data } = await api.get(`/movie/${id}`);
+    res.send(data);
   }
-  res.send(data);
+  catch (e){
+    console.log(e)
+        res.status(404).send("Movie not found");
+        return;
+  }
   });
-  
+  expressApp.get("/movie/popular",async (req,res)=>{
+    const {data} = await api.get ("/movie/popular")
+    res.send(data)
+  } )
+
+
 //  expressApp.get("/movie/:id", (req, res) => {
 //     const movie = .find((movie) => movie.id === req.params.id);
 //     if (!movie) {
